@@ -97,18 +97,29 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 	0xa1, 0x01,                    // COLLECTION (Application)
 	0x09, 0x01,                    //   USAGE (Pointer)
 	0xa1, 0x00,                    //   COLLECTION (Physical)
-	0x05, 0x09,                    //     USAGE_PAGE (Button)
-	0x19, 0x01,                    //     USAGE_MINIMUM (Button 1)
-	0x29, 0x01,                    //     USAGE_MAXIMUM (Button 1)
-	0x15, 0x00,                    //     LOGICAL_MINIMUM (0)
-	0x25, 0x01,                    //     LOGICAL_MAXIMUM (1)
-	0x95, 0x01,                    //     REPORT_COUNT (1)
-	0x75, 0x01,                    //     REPORT_SIZE (1)
+	 0x05, 0x09, // Usage Page (Button)
+	 0x19, 0x01, // Usage Minimum (0x01)
+	 0x29, 0x03, // Usage Maximum (0x03)
+
+	 0x15, 0x00, // Logical Minimum (0)
+	 0x25, 0x01, // Logical Maximum (1)
+	 0x95, 0x03, // Report Count (3)
+	 0x75, 0x01, // Report Size (1)
+	 0x81, 0x02, // Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+
+	 0x95, 0x01, // Report Count (1)
+	 0x75, 0x05, // Report Size (5)
+	 0x81, 0x01, // Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+
+	 0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
+	0x09, 0x30,                    //     USAGE (X)
+	0x09, 0x31,                    //     USAGE (Y)
+	0x15, 0x81,                    //     LOGICAL_MINIMUM (-127)
+	0x25, 0x7f,                    //     LOGICAL_MAXIMUM (127)
+	0x75, 0x08,                    //     REPORT_SIZE (8)
+	0x95, 0x02,                    //     REPORT_COUNT (2)
 	0x81, 0x02,                    //     INPUT (Data,Var,Abs)
-	0x95, 0x01,                    //     REPORT_COUNT (1)
-	0x75, 0x07,                    //     REPORT_SIZE (7)
-	0x81, 0x03,                    //     INPUT (Cnst,Var,Abs)
-	0xc0,                          //   END_COLLECTION
+	0xc0,                          //     END_COLLECTION
 	0xc0                           // END_COLLECTION
 };
 

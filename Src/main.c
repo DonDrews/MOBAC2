@@ -59,6 +59,49 @@ static void MX_GPIO_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+void Switch_IO_Init()
+{
+	RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
+	GPIOB->PUPDR |= GPIO_PUPDR_PUPDR4_0;
+	GPIOB->MODER |= GPIO_MODER_MODER3_0;
+}
+
+void Joystick_Init()
+{
+	//clock
+	RCC->APB2ENR |= RCC_APB2ENR_ADC1EN; /* (1) */
+	ADC1->CFGR2 |= ADC_CFGR2_CKMODE_1; // 1/4 speed of PCLK
+	//channel
+	ADC1->CHSELR = ADC_CHSELR_CHSEL5 | ADC_CHSELR_CHSEL6;
+	ADC1->SMPR |= ADC_SMPR_SMP_0 | ADC_SMPR_SMP_1;
+
+	//enable
+	if ((ADC1->ISR & ADC_ISR_ADRDY) != 0) /* (1) */
+	{
+		ADC1->ISR |= ADC_ISR_ADRDY; /* (2) */
+	}
+	ADC1->CR |= ADC_CR_ADEN; /* (3) */
+	while ((ADC1->ISR & ADC_ISR_ADRDY) == 0) /* (4) */
+	{
+	/* For robust implementation, add here time-out management */
+	}
+}
+
+void Joystick_Sample(uint16_t* val_x, uint16_t* val_y)
+{
+	//start the conversion
+	ADC1->CR |= ADC_CR_ADSTART;
+
+	while((ADC1->ISR & ADC_ISR_EOC) == 0){}
+
+	*val_x = ADC1->DR;
+
+	while((ADC1->ISR & ADC_ISR_EOC) == 0){}
+
+	*val_y = ADC1->DR;
+}
+
+
 /* USER CODE END 0 */
 
 /**
@@ -92,19 +135,21 @@ int main(void)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
-  RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
-  GPIOB->PUPDR |= GPIO_PUPDR_PUPDR4_0;
-  GPIOB->MODER |= GPIO_MODER_MODER3_0;
-
+  Joystick_Init();
+  Switch_IO_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  int8_t click = 0x00;
+
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	/*
 	uint32_t idr = GPIOB->IDR;
 	uint8_t report;
 	if(idr & GPIO_IDR_4)
@@ -117,9 +162,17 @@ int main(void)
 	  report = 0x01;
 	  GPIOB->BSRR |= 1 << 3;
 	}
+	*/
 
-	USBD_CUSTOM_HID_SendReport_FS(&report, 1);
+	uint16_t x, y;
+	Joystick_Sample(&x, &y);
+	int8_t real_x = ((x >> 4) - 127) + 12;
+	int8_t real_y = ((y >> 4) - 127) + 2;
+	int8_t report[3] = {click, real_x, real_y};
+	USBD_CUSTOM_HID_SendReport_FS((uint8_t*)report, 3);
 	HAL_Delay(10);
+	GPIOB->ODR ^= (1 << 3);
+
   }
   /* USER CODE END 3 */
 }
