@@ -24,8 +24,7 @@
 #include "usb_device.h"
 #include "usbd_core.h"
 #include "usbd_desc.h"
-#include "usbd_customhid.h"
-#include "usbd_custom_hid_if.h"
+#include "usbd_hid.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -40,9 +39,6 @@
 /* Private function prototypes -----------------------------------------------*/
 
 /* USER CODE END PFP */
-
-/* USB Device Core handle declaration. */
-USBD_HandleTypeDef hUsbDeviceFS;
 
 /*
  * -- Insert your variables declaration here --
@@ -73,11 +69,7 @@ void MX_USB_DEVICE_Init(void)
   {
     Error_Handler();
   }
-  if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_CUSTOM_HID) != USBD_OK)
-  {
-    Error_Handler();
-  }
-  if (USBD_CUSTOM_HID_RegisterInterface(&hUsbDeviceFS, &USBD_CustomHID_fops_FS) != USBD_OK)
+  if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_HID) != USBD_OK)
   {
     Error_Handler();
   }

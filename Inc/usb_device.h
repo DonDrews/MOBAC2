@@ -65,6 +65,9 @@
  */
 /* USER CODE BEGIN VARIABLES */
 
+ /* USB Device Core handle declaration. */
+ USBD_HandleTypeDef hUsbDeviceFS;
+
 /* USER CODE END VARIABLES */
 /**
   * @}

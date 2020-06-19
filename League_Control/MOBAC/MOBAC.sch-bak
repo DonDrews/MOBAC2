@@ -275,7 +275,9 @@ SHP
 Text HLabel 6250 3800 0    50   Input ~ 0
 PS
 Text HLabel 6250 4000 0    50   Input ~ 0
-SPL_LCK
+QCK_TOG
 Text HLabel 6250 4100 0    50   Input ~ 0
 R_CLICK
+Text HLabel 7250 4100 2    50   Input ~ 0
+CAM_TOG
 $EndSCHEMATC

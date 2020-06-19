@@ -16,7 +16,7 @@ C_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 Drivers/STM32F0xx_HAL_Driver/Src \
-Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Src \
+Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src \
 Src \
 startup \

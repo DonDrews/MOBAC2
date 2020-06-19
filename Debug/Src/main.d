@@ -28,8 +28,7 @@ Src/main.o: ../Src/main.c /home/donovan/STM/League_Final/Inc/main.h \
  /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
  /home/donovan/STM/League_Final/Inc/usbd_conf.h \
  /home/donovan/STM/League_Final/Inc/main.h \
- /home/donovan/STM/League_Final/Inc/usbd_custom_hid_if.h \
- /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc/usbd_customhid.h \
+ /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc/usbd_hid.h \
  /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
  /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
  /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
@@ -96,9 +95,7 @@ Src/main.o: ../Src/main.c /home/donovan/STM/League_Final/Inc/main.h \
 
 /home/donovan/STM/League_Final/Inc/main.h:
 
-/home/donovan/STM/League_Final/Inc/usbd_custom_hid_if.h:
-
-/home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc/usbd_customhid.h:
+/home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc/usbd_hid.h:
 
 /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
 

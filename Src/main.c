@@ -21,7 +21,23 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "usb_device.h"
-#include "usbd_custom_hid_if.h"
+#include "usbd_hid.h"
+
+typedef struct Mouse_Report
+{
+	uint8_t report_id; //must be 2
+	uint8_t buttons;
+	int8_t x_pos;
+	int8_t y_pos;
+} Mouse_Report;
+
+typedef struct Keyboard_Report
+{
+	uint8_t report_id; //must be 1
+    uint8_t modifier; //unused
+    uint8_t reserved; //unused
+    uint8_t keycode[6];
+} Keyboard_Report;
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -61,9 +77,9 @@ static void MX_GPIO_Init(void);
 
 void Switch_IO_Init()
 {
-	RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
-	GPIOB->PUPDR |= GPIO_PUPDR_PUPDR4_0;
-	GPIOB->MODER |= GPIO_MODER_MODER3_0;
+	//enable clock and pull-ups on 0,1,3
+	RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+	GPIOA->PUPDR |= GPIO_PUPDR_PUPDR0_0 | GPIO_PUPDR_PUPDR1_0 | GPIO_PUPDR_PUPDR3_0;
 }
 
 void Joystick_Init()
@@ -131,7 +147,6 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
@@ -142,36 +157,42 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  int8_t click = 0x00;
-
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	/*
-	uint32_t idr = GPIOB->IDR;
-	uint8_t report;
-	if(idr & GPIO_IDR_4)
+	uint32_t idr = GPIOA->IDR;
+	uint8_t first_key = 0x00;
+	if(!(idr & GPIO_IDR_0))
 	{
-	  report = 0x00;
-	  GPIOB->BRR |= 1 << 3;
+	  first_key = 0x14; //q
 	}
-	else
-	{
-	  report = 0x01;
-	  GPIOB->BSRR |= 1 << 3;
-	}
-	*/
 
 	uint16_t x, y;
 	Joystick_Sample(&x, &y);
-	int8_t real_x = ((x >> 4) - 127) + 12;
-	int8_t real_y = ((y >> 4) - 127) + 2;
-	int8_t report[3] = {click, real_x, real_y};
-	USBD_CUSTOM_HID_SendReport_FS((uint8_t*)report, 3);
+	int8_t real_x = -(((x >> 6) - 32) + 4);
+	int8_t real_y = ((y >> 6) - 32) + 1;
+	Mouse_Report rep =
+	{
+		2,
+		0,
+		real_x,
+		real_y
+	};
+
+	Keyboard_Report rep2 =
+	{
+		1,
+		0,
+		0,
+		first_key,
+		0, 0, 0, 0, 0
+	};
+	USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t*)&rep, sizeof(rep));
 	HAL_Delay(10);
-	GPIOB->ODR ^= (1 << 3);
+	USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t*)&rep2, sizeof(rep2));
+	HAL_Delay(10);
 
   }
   /* USER CODE END 3 */
@@ -215,19 +236,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void)
-{
-
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-
 }
 
 /* USER CODE BEGIN 4 */

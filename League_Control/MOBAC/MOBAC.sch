@@ -92,8 +92,6 @@ F 3 "" H 9800 3150 50  0001 C CNN
 	1    9800 3150
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	9300 3250 9300 4200
 $Comp
 L power:GND #PWR?
 U 1 1 5EE90F1E
@@ -121,114 +119,7 @@ F 3 "" H 7900 2900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9500 3350 9350 3350
-Wire Wire Line
-	9350 3350 9350 3000
-$Comp
-L power:VDD #PWR?
-U 1 1 5EE921A7
-P 9350 3000
-F 0 "#PWR?" H 9350 2850 50  0001 C CNN
-F 1 "VDD" H 9365 3173 50  0000 C CNN
-F 2 "" H 9350 3000 50  0001 C CNN
-F 3 "" H 9350 3000 50  0001 C CNN
-	1    9350 3000
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_US R?
-U 1 1 5EE95D6D
-P 8900 3450
-F 0 "R?" V 8695 3450 50  0000 C CNN
-F 1 "2k7" V 8786 3450 50  0000 C CNN
-F 2 "" V 8940 3440 50  0001 C CNN
-F 3 "~" H 8900 3450 50  0001 C CNN
-	1    8900 3450
-	0    1    1    0   
-$EndComp
-Wire Wire Line
 	9300 3250 9500 3250
-$Comp
-L Device:R_US R?
-U 1 1 5EE9CF6B
-P 8400 3750
-F 0 "R?" V 8195 3750 50  0000 C CNN
-F 1 "2k7" V 8286 3750 50  0000 C CNN
-F 2 "" V 8440 3740 50  0001 C CNN
-F 3 "~" H 8400 3750 50  0001 C CNN
-	1    8400 3750
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	9500 3450 9050 3450
-Wire Wire Line
-	9500 3550 9050 3550
-Wire Wire Line
-	9050 3550 9050 3750
-Wire Wire Line
-	8550 3750 9050 3750
-Wire Wire Line
-	8750 3450 8750 3850
-$Comp
-L Device:R_US R?
-U 1 1 5EEA0ACA
-P 8750 4000
-F 0 "R?" H 8818 4046 50  0000 L CNN
-F 1 "5k" H 8818 3955 50  0000 L CNN
-F 2 "" V 8790 3990 50  0001 C CNN
-F 3 "~" H 8750 4000 50  0001 C CNN
-	1    8750 4000
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	8250 3750 8250 3850
-$Comp
-L Device:R_US R?
-U 1 1 5EEA14C3
-P 8250 4000
-F 0 "R?" H 8318 4046 50  0000 L CNN
-F 1 "5k" H 8318 3955 50  0000 L CNN
-F 2 "" V 8290 3990 50  0001 C CNN
-F 3 "~" H 8250 4000 50  0001 C CNN
-	1    8250 4000
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR?
-U 1 1 5EEA1A3B
-P 8750 4150
-F 0 "#PWR?" H 8750 3900 50  0001 C CNN
-F 1 "GND" H 8755 3977 50  0000 C CNN
-F 2 "" H 8750 4150 50  0001 C CNN
-F 3 "" H 8750 4150 50  0001 C CNN
-	1    8750 4150
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR?
-U 1 1 5EEA1E13
-P 8250 4150
-F 0 "#PWR?" H 8250 3900 50  0001 C CNN
-F 1 "GND" H 8255 3977 50  0000 C CNN
-F 2 "" H 8250 4150 50  0001 C CNN
-F 3 "" H 8250 4150 50  0001 C CNN
-	1    8250 4150
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	8250 3750 7750 3750
-Connection ~ 8250 3750
-Wire Wire Line
-	7750 3750 7750 3400
-Wire Wire Line
-	7750 3400 7250 3400
-Wire Wire Line
-	8750 3450 8550 3450
-Wire Wire Line
-	8550 3450 8550 3300
-Wire Wire Line
-	8550 3300 7250 3300
-Connection ~ 8750 3450
 NoConn ~ 4950 3050
 Wire Wire Line
 	5350 2650 5650 2650
@@ -242,12 +133,6 @@ Wire Wire Line
 	5550 2750 5550 3900
 Wire Wire Line
 	5550 3900 6250 3900
-Wire Wire Line
-	9500 3650 8650 3650
-Wire Wire Line
-	8650 3650 8650 3200
-Wire Wire Line
-	8650 3200 7250 3200
 Text HLabel 7250 3800 2    50   Input ~ 0
 SW_Q
 Text HLabel 7250 3700 2    50   Input ~ 0
@@ -280,4 +165,30 @@ Text HLabel 6250 4100 0    50   Input ~ 0
 R_CLICK
 Text HLabel 7250 4100 2    50   Input ~ 0
 CAM_TOG
+Wire Wire Line
+	9300 3250 9300 4200
+Wire Wire Line
+	9500 3350 9400 3350
+Wire Wire Line
+	9400 3350 9400 4000
+Wire Wire Line
+	9400 4000 7250 4000
+Wire Wire Line
+	7850 3650 7850 3400
+Wire Wire Line
+	7850 3400 7250 3400
+Wire Wire Line
+	7850 3650 9500 3650
+Wire Wire Line
+	7950 3550 7950 3300
+Wire Wire Line
+	7950 3300 7250 3300
+Wire Wire Line
+	7950 3550 9500 3550
+Wire Wire Line
+	8050 3450 8050 3200
+Wire Wire Line
+	8050 3200 7250 3200
+Wire Wire Line
+	8050 3450 9500 3450
 $EndSCHEMATC
