@@ -22,6 +22,7 @@
 #include "main.h"
 #include "usb_device.h"
 #include "usbd_hid.h"
+#include "gpio_poller.h"
 
 typedef struct Mouse_Report
 {
@@ -67,20 +68,12 @@ typedef struct Keyboard_Report
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-void Switch_IO_Init()
-{
-	//enable clock and pull-ups on 0,1,3
-	RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
-	GPIOA->PUPDR |= GPIO_PUPDR_PUPDR0_0 | GPIO_PUPDR_PUPDR1_0 | GPIO_PUPDR_PUPDR3_0;
-}
 
 void Joystick_Init()
 {
@@ -151,7 +144,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   Joystick_Init();
-  Switch_IO_Init();
+  io_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */

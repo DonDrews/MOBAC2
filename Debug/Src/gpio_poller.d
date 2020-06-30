@@ -1,4 +1,5 @@
-Src/main.o: ../Src/main.c /home/donovan/STM/League_Final/Inc/main.h \
+Src/gpio_poller.o: ../Src/gpio_poller.c \
+ /home/donovan/STM/League_Final/Inc/gpio_poller.h \
  /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h \
  /home/donovan/STM/League_Final/Inc/stm32f0xx_hal_conf.h \
  /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h \
@@ -23,20 +24,9 @@ Src/main.o: ../Src/main.c /home/donovan/STM/League_Final/Inc/main.h \
  /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pcd.h \
  /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pcd_ex.h \
  /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr.h \
- /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr_ex.h \
- /home/donovan/STM/League_Final/Inc/usb_device.h \
- /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
- /home/donovan/STM/League_Final/Inc/usbd_conf.h \
- /home/donovan/STM/League_Final/Inc/main.h \
- /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc/usbd_hid.h \
- /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
- /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
- /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
- /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
- /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h \
- /home/donovan/STM/League_Final/Inc/gpio_poller.h
+ /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr_ex.h
 
-/home/donovan/STM/League_Final/Inc/main.h:
+/home/donovan/STM/League_Final/Inc/gpio_poller.h:
 
 /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h:
 
@@ -87,25 +77,3 @@ Src/main.o: ../Src/main.c /home/donovan/STM/League_Final/Inc/main.h \
 /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr.h:
 
 /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr_ex.h:
-
-/home/donovan/STM/League_Final/Inc/usb_device.h:
-
-/home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
-
-/home/donovan/STM/League_Final/Inc/usbd_conf.h:
-
-/home/donovan/STM/League_Final/Inc/main.h:
-
-/home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc/usbd_hid.h:
-
-/home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
-
-/home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
-
-/home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h:
-
-/home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
-
-/home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h:
-
-/home/donovan/STM/League_Final/Inc/gpio_poller.h:
