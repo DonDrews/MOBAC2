@@ -14,8 +14,8 @@ typedef struct
 
 typedef struct
 {
-	uint32_t log;
-	uint32_t state;
+	uint8_t log;
+	volatile uint8_t state;
 } button_state;
 
 enum button_names
@@ -40,8 +40,8 @@ enum button_names
 
 extern const button_def definitions[NUM_BUTTONS];
 
-button_state states[NUM_BUTTONS];
-
 void io_init();
+
+button_state* get_states();
 
 #endif

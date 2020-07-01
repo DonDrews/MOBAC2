@@ -75,41 +75,6 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-void Joystick_Init()
-{
-	//clock
-	RCC->APB2ENR |= RCC_APB2ENR_ADC1EN; /* (1) */
-	ADC1->CFGR2 |= ADC_CFGR2_CKMODE_1; // 1/4 speed of PCLK
-	//channel
-	ADC1->CHSELR = ADC_CHSELR_CHSEL5 | ADC_CHSELR_CHSEL6;
-	ADC1->SMPR |= ADC_SMPR_SMP_0 | ADC_SMPR_SMP_1;
-
-	//enable
-	if ((ADC1->ISR & ADC_ISR_ADRDY) != 0) /* (1) */
-	{
-		ADC1->ISR |= ADC_ISR_ADRDY; /* (2) */
-	}
-	ADC1->CR |= ADC_CR_ADEN; /* (3) */
-	while ((ADC1->ISR & ADC_ISR_ADRDY) == 0) /* (4) */
-	{
-	/* For robust implementation, add here time-out management */
-	}
-}
-
-void Joystick_Sample(uint16_t* val_x, uint16_t* val_y)
-{
-	//start the conversion
-	ADC1->CR |= ADC_CR_ADSTART;
-
-	while((ADC1->ISR & ADC_ISR_EOC) == 0){}
-
-	*val_x = ADC1->DR;
-
-	while((ADC1->ISR & ADC_ISR_EOC) == 0){}
-
-	*val_y = ADC1->DR;
-}
-
 
 /* USER CODE END 0 */
 

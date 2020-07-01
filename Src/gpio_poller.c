@@ -20,13 +20,15 @@ const button_def definitions[NUM_BUTTONS] =
 	{GPIOB, 4, 0x00} //L_CLICK (NULL)
 };
 
+button_state states[NUM_BUTTONS];
+
 void io_init()
 {
 	//enable TIM3 clock
 	RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
 
 	//8kHz update for IO sample
-	TIM3->PSC = 6;
+	TIM3->PSC = 11;
 	TIM3->ARR = 1000;
 
 	//enable interrupt
@@ -50,7 +52,7 @@ void io_init()
 	}
 }
 
-//Called at 125us interval
+//Called at 250us interval
 //pushes another entry into the logs of each button, and if sufficient
 //condition is met for debounced press, change the state
 void TIM3_IRQHandler(void)
@@ -74,13 +76,18 @@ void TIM3_IRQHandler(void)
 		states[i].log |= val;
 
 		//check for state change
-		if(states[i].log == 0xFFFFFFFF && !states[i].state)
-		{
-			states[i].state = 1;
-		}
-		else if(states[i].log == 0x00000000 && states[i].state)
+		if(states[i].log == 0xFF && !states[i].state)
 		{
 			states[i].state = 0;
 		}
+		else if(states[i].log == 0x00 && states[i].state)
+		{
+			states[i].state = 1;
+		}
 	}
+}
+
+button_state* get_states()
+{
+	return &states[0];
 }
