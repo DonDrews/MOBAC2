@@ -34,7 +34,8 @@ Src/main.o: ../Src/main.c /home/donovan/STM/League_Final/Inc/main.h \
  /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
  /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
  /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h \
- /home/donovan/STM/League_Final/Inc/gpio_poller.h
+ /home/donovan/STM/League_Final/Inc/gpio_poller.h \
+ /home/donovan/STM/League_Final/Inc/joystick.h
 
 /home/donovan/STM/League_Final/Inc/main.h:
 
@@ -109,3 +110,5 @@ Src/main.o: ../Src/main.c /home/donovan/STM/League_Final/Inc/main.h \
 /home/donovan/STM/League_Final/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h:
 
 /home/donovan/STM/League_Final/Inc/gpio_poller.h:
+
+/home/donovan/STM/League_Final/Inc/joystick.h:

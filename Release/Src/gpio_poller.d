@@ -24,7 +24,8 @@ Src/gpio_poller.o: ../Src/gpio_poller.c \
  /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pcd.h \
  /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pcd_ex.h \
  /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr.h \
- /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr_ex.h
+ /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr_ex.h \
+ /home/donovan/STM/League_Final/Inc/joystick.h
 
 /home/donovan/STM/League_Final/Inc/gpio_poller.h:
 
@@ -77,3 +78,5 @@ Src/gpio_poller.o: ../Src/gpio_poller.c \
 /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr.h:
 
 /home/donovan/STM/League_Final/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr_ex.h:
+
+/home/donovan/STM/League_Final/Inc/joystick.h:

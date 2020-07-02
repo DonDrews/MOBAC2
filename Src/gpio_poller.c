@@ -1,4 +1,5 @@
 #include "gpio_poller.h"
+#include "joystick.h"
 
 const button_def definitions[NUM_BUTTONS] =
 {
@@ -22,6 +23,8 @@ const button_def definitions[NUM_BUTTONS] =
 
 button_state states[NUM_BUTTONS];
 
+uint8_t next_sample = 0;
+
 void io_init()
 {
 	//enable TIM3 clock
@@ -35,6 +38,7 @@ void io_init()
 	TIM3->DIER |= TIM_DIER_UIE;
 	TIM3->CR1 |= TIM_CR1_CEN;
 	NVIC_EnableIRQ(TIM3_IRQn);
+	HAL_NVIC_SetPriority(TIM3_IRQn, 3, 0);
 
 	//set all states and logs to default
 	for(int i = 0; i < NUM_BUTTONS; i++)
@@ -62,8 +66,13 @@ void TIM3_IRQHandler(void)
 		return;
 	}
 
-	TIM3->SR &= ~TIM_SR_UIF; // clear UIF flag
+	next_sample = 1;
 
+	TIM3->SR &= ~TIM_SR_UIF; // clear UIF flag
+}
+
+void debounce_sample()
+{
 	//push another value to log
 	for(int i = 0; i < NUM_BUTTONS; i++)
 	{
@@ -83,8 +92,17 @@ void TIM3_IRQHandler(void)
 		else if(states[i].log == 0x00 && states[i].state)
 		{
 			states[i].state = 1;
+
+			//special case: if this is the quickcast button,
+			//toggle joystick positioning mode
+			if(i == QUICKCAST)
+			{
+				set_rel(!get_rel());
+			}
 		}
 	}
+
+	next_sample = 0;
 }
 
 button_state* get_states()

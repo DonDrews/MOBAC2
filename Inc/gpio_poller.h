@@ -40,6 +40,10 @@ enum button_names
 
 extern const button_def definitions[NUM_BUTTONS];
 
+//flag set by timer interrupt
+//lets main method know when to sample
+extern uint8_t next_sample;
+
 void io_init();
 
 button_state* get_states();

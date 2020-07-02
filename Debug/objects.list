@@ -19,6 +19,7 @@
 "Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.o"
 "Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o"
 "Src/gpio_poller.o"
+"Src/joystick.o"
 "Src/main.o"
 "Src/stm32f0xx_hal_msp.o"
 "Src/stm32f0xx_it.o"

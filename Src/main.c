@@ -23,6 +23,7 @@
 #include "usb_device.h"
 #include "usbd_hid.h"
 #include "gpio_poller.h"
+#include "joystick.h"
 
 typedef struct Mouse_Report
 {
@@ -76,6 +77,46 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 
+void send_keyboard_report()
+{
+	button_state* buttons = get_states();
+
+	Keyboard_Report rep1 = {1, 0, 0, {0,0,0,0,0,0}};
+	uint8_t fill_loc = 0;
+
+	for(int i = 0; i < NUM_BUTTONS; i++)
+	{
+		//if keycode is null, then button is for non-keyboard use
+		if(buttons[i].state && definitions[i].keycode)
+		{
+			rep1.keycode[fill_loc++] = definitions[i].keycode;
+		}
+	}
+	USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t*)&rep1, sizeof(rep1));
+}
+
+void send_mouse_report()
+{
+	button_state* buttons = get_states();
+
+	Mouse_Report rep2 = {2, 0, 0, 0};
+
+	//mouse buttons
+	if(buttons[L_CLICK].state)
+		rep2.buttons |= (1 << 3);
+
+	if(buttons[R_CLICK].state)
+		rep2.buttons |= 1;
+
+	//mouse cursor
+	int8_t x,y;
+	get_value(&x, &y);
+	rep2.x_pos = x;
+	rep2.y_pos = y;
+
+	USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t*)&rep2, sizeof(rep2));
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -108,51 +149,32 @@ int main(void)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
-  Joystick_Init();
   io_init();
+  joystick_init();
+  set_calibration_point();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-  while (1)
-  {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-	uint32_t idr = GPIOA->IDR;
-	uint8_t first_key = 0x00;
-	if(!(idr & GPIO_IDR_0))
+  	int send_mouse = 0;
+	while (1)
 	{
-	  first_key = 0x14; //q
+		int counter = 0;
+		while(counter < 20) //20 debounce samples = 5ms
+		{
+			while(!next_sample){}
+
+			debounce_sample();
+			counter++;
+		}
+
+		if(send_mouse)
+			send_mouse_report();
+		else
+			send_keyboard_report();
+
+		send_mouse = !send_mouse;
 	}
-
-	uint16_t x, y;
-	Joystick_Sample(&x, &y);
-	int8_t real_x = -(((x >> 6) - 32) + 4);
-	int8_t real_y = ((y >> 6) - 32) + 1;
-	Mouse_Report rep =
-	{
-		2,
-		0,
-		real_x,
-		real_y
-	};
-
-	Keyboard_Report rep2 =
-	{
-		1,
-		0,
-		0,
-		first_key,
-		0, 0, 0, 0, 0
-	};
-	USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t*)&rep, sizeof(rep));
-	HAL_Delay(10);
-	USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t*)&rep2, sizeof(rep2));
-	HAL_Delay(10);
-
-  }
   /* USER CODE END 3 */
 }
 

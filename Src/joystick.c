@@ -1,15 +1,43 @@
 #include "joystick.h"
 #include "stdlib.h"
 
-uint8_t rel_enabled = 0;
+//relative or absolute positioning for the joystick
+volatile uint8_t rel_enabled = 0;
 
-uint8_t last_x = CENTER;
-uint8_t last_y = CENTER;
+//position of the cursor at the last get_value() call
+//used for relative to integrate, and absolute for speed limiting
+volatile int8_t last_x = 0;
+volatile int8_t last_y = 0;
 
+//record of the analog reading of the
+//center position of the joystick at startup
 struct {
-	int8_t x_offset;
-	int8_t y_offset;
+	uint8_t x_offset;
+	uint8_t y_offset;
 } calibration;
+
+//finds approximate distance in fixed-point arithmetic
+//using alpha-max plus beta-min algorithm
+static int16_t distance(int16_t x, int16_t y)
+{
+	int16_t abs_x = abs(x);
+	int16_t abs_y = abs(y);
+
+	int16_t max, min;
+
+	if(abs_x > abs_y)
+	{
+		max = abs_x;
+		min = abs_y;
+	}
+	else
+	{
+		max = abs_y;
+		min = abs_x;
+	}
+
+	return max + (min >> 4) * 3;
+}
 
 //gets a direct sample of the joystick analog input, with a blocking sample
 static void get_sample(uint16_t* x, uint16_t* y)
@@ -61,27 +89,30 @@ void set_calibration_point()
 	x = x >> 4;
 	y = y >> 4;
 
-	calibration.x_offset = -x;
-	calibration.y_offset = -y;
+	calibration.x_offset = x;
+	calibration.y_offset = y;
 }
 
-void start_rel()
+void set_rel(uint8_t state)
 {
-	rel_enabled = 1;
+	if(state)
+	{
+		//reset to center of screen
+		last_x = 0;
+		last_y = 0;
+	}
 
-	//reset to center of screen
-	last_x = CENTER;
-	last_y = CENTER;
+	rel_enabled = state;
 }
 
-void end_rel()
+uint8_t get_rel()
 {
-	rel_enabled = 0;
+	return rel_enabled;
 }
 
 //gets the logical value of the cursor based
 //on the joystick
-void get_value(uint8_t* x, uint8_t* y)
+void get_value(int8_t* x, int8_t* y)
 {
 	int16_t x_l, y_l;
 
@@ -92,16 +123,16 @@ void get_value(uint8_t* x, uint8_t* y)
 	spl_x = spl_x >> 4;
 	spl_y = spl_y >> 4;
 
-	//apply calibrated offset
-	int16_t real_x = spl_x + calibration.x_offset;
-	int16_t real_y = spl_y + calibration.y_offset;
+	//apply calibrated offset (also centers at zero)
+	int16_t real_x = spl_x - calibration.x_offset;
+	int16_t real_y = spl_y - calibration.y_offset;
 
 	//nullify if below threshold
-	if(real_x > CENTER - MOVE_THRESHOLD && real_x < CENTER + MOVE_THRESHOLD)
+	if(real_x > -MOVE_THRESHOLD && real_x < MOVE_THRESHOLD)
 	{
 		real_x = 0;
 	}
-	if(real_y > CENTER - MOVE_THRESHOLD && real_y < CENTER + MOVE_THRESHOLD)
+	if(real_y > -MOVE_THRESHOLD && real_y < MOVE_THRESHOLD)
 	{
 		real_y = 0;
 	}
@@ -140,44 +171,21 @@ void get_value(uint8_t* x, uint8_t* y)
 	}
 
 	//limit to screen width
-	if(x_l < 0)
-		x_l = 0;
+	if(x_l < -128)
+		x_l = -128;
 
-	if(x_l > 255)
-		x_l = 255;
+	if(x_l > 127)
+		x_l = 127;
 
-	if(y_l < 0)
-		y_l = 0;
+	if(y_l < -128)
+		y_l = -128;
 
-	if(y_l > 255)
-		y_l = 255;
+	if(y_l > 127)
+		y_l = 127;
 
 	last_x = x_l;
 	last_y = y_l;
 
-	x = (uint8_t)x_l;
-	y = (uint8_t)y_l;
-}
-
-//finds approximate distance in fixed-point arithmetic
-//using alpha-max plus beta-min algorithm
-static int16_t distance(int16_t x, int16_t y)
-{
-	int16_t abs_x = abs(x);
-	int16_t abs_y = abs(y);
-
-	int16_t max, min;
-
-	if(abs_x > abs_y)
-	{
-		max = abs_x;
-		min = abs_y;
-	}
-	else
-	{
-		max = abs_y;
-		min = abs_x;
-	}
-
-	return max + (min >> 4) * 3;
+	*x = (int8_t)x_l;
+	*y = (int8_t)y_l;
 }
