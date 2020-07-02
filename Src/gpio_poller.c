@@ -12,8 +12,8 @@ const button_def definitions[NUM_BUTTONS] =
 	{GPIOA, 9, 0x05}, //RECALL (B)
 	{GPIOB, 0, 0x1c}, //CAMLOCK (Y)
 	{GPIOB, 5, 0x14}, //Q (Q)
-	{GPIOB, 6, 0x1a}, //W (W)
-	{GPIOB, 7, 0x08}, //E (E)
+	{GPIOB, 6, 0x00}, //W (W) *temp disabled
+	{GPIOB, 7, 0x00}, //E (E) *temp disabled
 	{GPIOF, 0, 0x15}, //R (R)
 	{GPIOF, 1, 0x13}, //SHOP (P)
 	{GPIOA, 10, 0x00}, //QUICKCAST (NULL)
@@ -85,11 +85,11 @@ void debounce_sample()
 		states[i].log |= val;
 
 		//check for state change
-		if(states[i].log == 0xFF && !states[i].state)
+		if(states[i].log == 0xFF && states[i].state)
 		{
 			states[i].state = 0;
 		}
-		else if(states[i].log == 0x00 && states[i].state)
+		else if(states[i].log == 0x00 && !states[i].state)
 		{
 			states[i].state = 1;
 

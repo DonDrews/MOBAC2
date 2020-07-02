@@ -4,7 +4,7 @@
 #include "stm32f0xx_hal.h"
 
 #define MOVE_THRESHOLD 5
-#define REL_SPEED_DIVIDER 3
+#define REL_SPEED_DIVIDER 30
 #define MAX_CURSOR_SPEED 10
 
 void joystick_init();

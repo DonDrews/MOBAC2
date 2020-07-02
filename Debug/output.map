@@ -5266,7 +5266,7 @@ OUTPUT(League_Final.elf elf32-littlearm)
  .debug_line    0x000000000000a55f      0x900 Src/usbd_desc.o
  .debug_line    0x000000000000ae5f       0x95 startup/startup_stm32f042x6.o
 
-.debug_str      0x0000000000000000    0x6e2a4
+.debug_str      0x0000000000000000    0x6e2a5
  .debug_str     0x0000000000000000    0x6b49e Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal.o
                                       0x6b75c (size before relaxing)
  .debug_str     0x000000000006b49e      0x220 Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.o
@@ -5287,25 +5287,25 @@ OUTPUT(League_Final.elf elf32-littlearm)
                                       0x6c152 (size before relaxing)
  .debug_str     0x000000000006d968       0xc9 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o
                                       0x6c0da (size before relaxing)
- .debug_str     0x000000000006da31      0x186 Src/gpio_poller.o
-                                      0x6b615 (size before relaxing)
- .debug_str     0x000000000006dbb7      0x10c Src/joystick.o
-                                      0x6b4a7 (size before relaxing)
- .debug_str     0x000000000006dcc3       0xee Src/main.o
-                                      0x6c59f (size before relaxing)
- .debug_str     0x000000000006ddb1       0x1b Src/stm32f0xx_hal_msp.o
+ .debug_str     0x000000000006da31      0x187 Src/gpio_poller.o
+                                      0x6b616 (size before relaxing)
+ .debug_str     0x000000000006dbb8      0x10c Src/joystick.o
+                                      0x6b4a8 (size before relaxing)
+ .debug_str     0x000000000006dcc4       0xee Src/main.o
+                                      0x6c5a0 (size before relaxing)
+ .debug_str     0x000000000006ddb2       0x1b Src/stm32f0xx_hal_msp.o
                                       0x6b2a9 (size before relaxing)
- .debug_str     0x000000000006ddcc       0x8c Src/stm32f0xx_it.o
+ .debug_str     0x000000000006ddcd       0x8c Src/stm32f0xx_it.o
                                       0x6b598 (size before relaxing)
- .debug_str     0x000000000006de58       0x3b Src/system_stm32f0xx.o
+ .debug_str     0x000000000006de59       0x3b Src/system_stm32f0xx.o
                                       0x6b273 (size before relaxing)
- .debug_str     0x000000000006de93       0x27 Src/usb_device.o
+ .debug_str     0x000000000006de94       0x27 Src/usb_device.o
                                       0x6c25c (size before relaxing)
- .debug_str     0x000000000006deba      0x16e Src/usbd_conf.o
+ .debug_str     0x000000000006debb      0x16e Src/usbd_conf.o
                                       0x6c9cc (size before relaxing)
- .debug_str     0x000000000006e028      0x24d Src/usbd_desc.o
+ .debug_str     0x000000000006e029      0x24d Src/usbd_desc.o
                                       0x6c042 (size before relaxing)
- .debug_str     0x000000000006e275       0x2f startup/startup_stm32f042x6.o
+ .debug_str     0x000000000006e276       0x2f startup/startup_stm32f042x6.o
                                          0x54 (size before relaxing)
 
 .comment        0x0000000000000000       0x7f
