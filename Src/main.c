@@ -103,10 +103,10 @@ void send_mouse_report()
 
 	//mouse buttons
 	if(buttons[L_CLICK].state)
-		rep2.buttons |= (1 << 3);
-
-	if(buttons[R_CLICK].state)
 		rep2.buttons |= 1;
+
+	if(buttons[R_CLICK].state || get_autoclick())
+		rep2.buttons |= (1 << 1);
 
 	//mouse cursor
 	int8_t x,y;

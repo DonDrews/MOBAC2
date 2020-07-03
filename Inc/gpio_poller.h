@@ -10,6 +10,7 @@ typedef struct
 	GPIO_TypeDef* port;
 	uint16_t pin;
 	uint8_t keycode;
+	uint8_t quickcasted;
 } button_def;
 
 typedef struct
@@ -47,5 +48,7 @@ extern uint8_t next_sample;
 void io_init();
 
 button_state* get_states();
+void toggle_quickcast();
+uint8_t get_autoclick();
 
 #endif

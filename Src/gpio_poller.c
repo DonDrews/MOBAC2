@@ -3,27 +3,31 @@
 
 const button_def definitions[NUM_BUTTONS] =
 {
-	{GPIOA, 0, 0x1e}, //ITEM1 (1)
-	{GPIOA, 1, 0x1f}, //ITEM2 (2)
-	{GPIOA, 3, 0x20}, //ITEM3 (3)
-	{GPIOA, 4, 0x07}, //SUMM1 (D)
-	{GPIOA, 7, 0x09}, //SUMM2 (F)
-	{GPIOA, 8, 0x21}, //WARD (4)
-	{GPIOA, 9, 0x05}, //RECALL (B)
-	{GPIOB, 0, 0x1c}, //CAMLOCK (Y)
-	{GPIOB, 5, 0x14}, //Q (Q)
-	{GPIOB, 6, 0x00}, //W (W) *temp disabled
-	{GPIOB, 7, 0x00}, //E (E) *temp disabled
-	{GPIOF, 0, 0x15}, //R (R)
-	{GPIOF, 1, 0x13}, //SHOP (P)
-	{GPIOA, 10, 0x00}, //QUICKCAST (NULL)
-	{GPIOB, 1, 0x00}, //R_CLICK (NULL)
-	{GPIOB, 4, 0x00} //L_CLICK (NULL)
+	{GPIOA, 0, 0x1e, 1}, //ITEM1 (1)
+	{GPIOA, 1, 0x1f, 1}, //ITEM2 (2)
+	{GPIOA, 3, 0x20, 1}, //ITEM3 (3)
+	{GPIOA, 4, 0x07, 1}, //SUMM1 (D)
+	{GPIOA, 7, 0x09, 1}, //SUMM2 (F)
+	{GPIOA, 8, 0x21, 1}, //WARD (4)
+	{GPIOA, 9, 0x05, 0}, //RECALL (B)
+	{GPIOB, 0, 0x1c, 0}, //CAMLOCK (Y)
+	{GPIOB, 5, 0x14, 1}, //Q (Q)
+	{GPIOB, 6, 0x00, 1}, //W (W) *temp disabled
+	{GPIOB, 7, 0x00, 1}, //E (E) *temp disabled
+	{GPIOF, 0, 0x15, 1}, //R (R)
+	{GPIOF, 1, 0x13, 0}, //SHOP (P)
+	{GPIOA, 10, 0x00, 0}, //QUICKCAST (NULL)
+	{GPIOB, 1, 0x00, 0}, //R_CLICK (NULL)
+	{GPIOB, 4, 0x00, 0} //L_CLICK (NULL)
 };
 
 button_state states[NUM_BUTTONS];
 
+//flag for signaling a queued debounce sample
 uint8_t next_sample = 0;
+
+static uint8_t quickcast = 0;
+static uint8_t click_queued = 0;
 
 void io_init()
 {
@@ -54,6 +58,9 @@ void io_init()
 		//enable pull up resistor
 		definitions[i].port->PUPDR |= (1 << (definitions[i].pin * 2));
 	}
+
+	//enable output for LED indicator
+	GPIOB->MODER |= GPIO_MODER_MODER3_0;
 }
 
 //Called at 250us interval
@@ -88,17 +95,24 @@ void debounce_sample()
 		if(states[i].log == 0xFF && states[i].state)
 		{
 			states[i].state = 0;
+
+			//when releasing a button, if it is quickcast-able,
+			//queue a right click for the next USB report
+			if(definitions[i].quickcasted && quickcast)
+				click_queued = 4;
 		}
 		else if(states[i].log == 0x00 && !states[i].state)
 		{
 			states[i].state = 1;
 
-			//special case: if this is the quickcast button,
+			//special case: if this is the shop button,
 			//toggle joystick positioning mode
+			if(i == SHOP)
+				toggle_rel();
+
+			//special case: if quickcast button, toggle mode
 			if(i == QUICKCAST)
-			{
-				set_rel(!get_rel());
-			}
+				toggle_quickcast();
 		}
 	}
 
@@ -108,4 +122,21 @@ void debounce_sample()
 button_state* get_states()
 {
 	return &states[0];
+}
+
+void toggle_quickcast()
+{
+	quickcast = !quickcast;
+
+	//toggle LED indicator
+	GPIOB->ODR ^= 1 << 3;
+}
+
+//return whether there is a click queued, and reset if there is
+uint8_t get_autoclick()
+{
+	if(click_queued)
+		return click_queued--;
+	else
+		return click_queued;
 }

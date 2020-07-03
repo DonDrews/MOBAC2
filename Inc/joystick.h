@@ -9,8 +9,7 @@
 
 void joystick_init();
 void set_calibration_point();
-void set_rel(uint8_t state);
-uint8_t get_rel();
+void toggle_rel();
 void get_value(int8_t* x, int8_t* y);
 
 #endif

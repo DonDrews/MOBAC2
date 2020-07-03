@@ -93,21 +93,15 @@ void set_calibration_point()
 	calibration.y_offset = y;
 }
 
-void set_rel(uint8_t state)
+void toggle_rel()
 {
-	if(state)
+	rel_enabled = !rel_enabled;
+	if(rel_enabled)
 	{
 		//reset to center of screen
 		last_x = 0;
 		last_y = 0;
 	}
-
-	rel_enabled = state;
-}
-
-uint8_t get_rel()
-{
-	return rel_enabled;
 }
 
 //gets the logical value of the cursor based
