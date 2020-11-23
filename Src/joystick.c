@@ -52,6 +52,9 @@ static void get_sample(uint16_t* x, uint16_t* y)
 	while((ADC1->ISR & ADC_ISR_EOC) == 0){}
 
 	*y = ADC1->DR;
+
+	//inverting y since power on joystick backward (y is uint12)
+	*y = 4095 - *y;
 }
 
 //initializes various ADC and clock registers for joystick operation

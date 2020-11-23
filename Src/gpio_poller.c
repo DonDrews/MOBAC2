@@ -3,22 +3,22 @@
 
 const button_def definitions[NUM_BUTTONS] =
 {
-	{GPIOA, 0, 0x1e, 1}, //ITEM1 (1)
-	{GPIOA, 1, 0x1f, 1}, //ITEM2 (2)
-	{GPIOA, 3, 0x20, 1}, //ITEM3 (3)
-	{GPIOA, 4, 0x07, 1}, //SUMM1 (D)
-	{GPIOA, 7, 0x09, 1}, //SUMM2 (F)
-	{GPIOA, 8, 0x21, 1}, //WARD (4)
-	{GPIOA, 9, 0x05, 0}, //RECALL (B)
-	{GPIOB, 0, 0x1c, 0}, //CAMLOCK (Y)
-	{GPIOB, 5, 0x14, 1}, //Q (Q)
-	{GPIOB, 6, 0x00, 1}, //W (W) *temp disabled
-	{GPIOB, 7, 0x00, 1}, //E (E) *temp disabled
-	{GPIOF, 0, 0x15, 1}, //R (R)
-	{GPIOF, 1, 0x13, 0}, //SHOP (P)
-	{GPIOA, 10, 0x00, 0}, //QUICKCAST (NULL)
-	{GPIOB, 1, 0x00, 0}, //R_CLICK (NULL)
-	{GPIOB, 4, 0x00, 0} //L_CLICK (NULL)
+	{GPIOB, 0, 0x1e, 1}, //ITEM1 (1)
+	{GPIOA, 7, 0x1f, 1}, //ITEM2 (2)
+	{GPIOA, 4, 0x20, 1}, //ITEM3 (3)
+	{GPIOA, 3, 0x07, 1}, //SUMM1 (D)
+	{GPIOA, 9, 0x09, 1}, //SUMM2 (F)
+	{GPIOF, 0, 0x19, 1}, //WARD (V)
+	{GPIOA, 1, 0x05, 0}, //RECALL (B)
+	{GPIOB, 1, 0x1c, 0}, //CAMLOCK (Y)
+	{GPIOF, 1, 0x14, 1}, //Q (Q)
+	{GPIOA, 8, 0x1a, 1}, //W (W)
+	{GPIOB, 5, 0x08, 1}, //E (E)
+	{GPIOB, 4, 0x15, 1}, //R (R)
+	{GPIOA, 0, 0x13, 0}, //SHOP (P)
+	{GPIOA, 10, 0x2e, 0}, //QUICKCAST (NULL)
+	{GPIOB, 7, 0x2d, 0}, //R_CLICK (NULL)
+	{GPIOB, 6, 0x00, 0} //L_CLICK (NULL)
 };
 
 button_state states[NUM_BUTTONS];
@@ -78,6 +78,9 @@ void TIM3_IRQHandler(void)
 	TIM3->SR &= ~TIM_SR_UIF; // clear UIF flag
 }
 
+//called from main function to sample all outputs,
+//put new value into their logs, and check for a state
+//switch
 void debounce_sample()
 {
 	//push another value to log
@@ -116,6 +119,7 @@ void debounce_sample()
 		}
 	}
 
+	//reset flag
 	next_sample = 0;
 }
 

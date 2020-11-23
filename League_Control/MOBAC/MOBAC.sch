@@ -24,17 +24,6 @@ F 3 "https://www.arduino.cc/en/uploads/Main/ArduinoNanoManual23.pdf" H 6900 3500
 	1    6750 3350
 	1    0    0    -1  
 $EndComp
-$Comp
-L Connector:USB_B J?
-U 1 1 5EE86F99
-P 5050 2650
-F 0 "J?" H 4820 2639 50  0000 R CNN
-F 1 "USB_B" H 4820 2548 50  0000 R CNN
-F 2 "" H 5200 2600 50  0001 C CNN
-F 3 " ~" H 5200 2600 50  0001 C CNN
-	1    5050 2650
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	5350 2450 5650 2450
 Wire Wire Line
@@ -158,13 +147,11 @@ RCL
 Text HLabel 6250 3700 0    50   Input ~ 0
 SHP
 Text HLabel 6250 3800 0    50   Input ~ 0
-PS
+CAM_TOG
 Text HLabel 6250 4000 0    50   Input ~ 0
 QCK_TOG
 Text HLabel 6250 4100 0    50   Input ~ 0
 R_CLICK
-Text HLabel 7250 4100 2    50   Input ~ 0
-CAM_TOG
 Wire Wire Line
 	9300 3250 9300 4200
 Wire Wire Line
@@ -174,21 +161,74 @@ Wire Wire Line
 Wire Wire Line
 	9400 4000 7250 4000
 Wire Wire Line
-	7850 3650 7850 3400
-Wire Wire Line
-	7850 3400 7250 3400
-Wire Wire Line
 	7850 3650 9500 3650
-Wire Wire Line
-	7950 3550 7950 3300
-Wire Wire Line
-	7950 3300 7250 3300
 Wire Wire Line
 	7950 3550 9500 3550
 Wire Wire Line
-	8050 3450 8050 3200
-Wire Wire Line
-	8050 3200 7250 3200
-Wire Wire Line
 	8050 3450 9500 3450
+Text HLabel 7250 3100 2    50   Input ~ 0
+PS
+$Comp
+L Device:R_US R?
+U 1 1 5F002B19
+P 7450 4350
+F 0 "R?" H 7518 4396 50  0000 L CNN
+F 1 "470" H 7518 4305 50  0000 L CNN
+F 2 "" V 7490 4340 50  0001 C CNN
+F 3 "~" H 7450 4350 50  0001 C CNN
+	1    7450 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7250 4100 7450 4100
+Wire Wire Line
+	7450 4100 7450 4200
+$Comp
+L Device:LED D?
+U 1 1 5F004BAC
+P 7450 4650
+F 0 "D?" V 7489 4532 50  0000 R CNN
+F 1 "LED" V 7398 4532 50  0000 R CNN
+F 2 "" H 7450 4650 50  0001 C CNN
+F 3 "~" H 7450 4650 50  0001 C CNN
+	1    7450 4650
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	7450 4800 7450 5000
+$Comp
+L power:GND #PWR?
+U 1 1 5F005C8E
+P 7450 5000
+F 0 "#PWR?" H 7450 4750 50  0001 C CNN
+F 1 "GND" H 7455 4827 50  0000 C CNN
+F 2 "" H 7450 5000 50  0001 C CNN
+F 3 "" H 7450 5000 50  0001 C CNN
+	1    7450 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:USB_B_Micro J?
+U 1 1 5FB1B7B0
+P 5050 2650
+F 0 "J?" H 5107 3117 50  0000 C CNN
+F 1 "USB_B_Micro" H 5107 3026 50  0000 C CNN
+F 2 "" H 5200 2600 50  0001 C CNN
+F 3 "~" H 5200 2600 50  0001 C CNN
+	1    5050 2650
+	1    0    0    -1  
+$EndComp
+NoConn ~ 5350 2850
+Wire Wire Line
+	8050 3450 8050 3300
+Wire Wire Line
+	8050 3300 7250 3300
+Wire Wire Line
+	7950 3550 7950 3400
+Wire Wire Line
+	7950 3400 7250 3400
+Wire Wire Line
+	7850 3650 7850 3200
+Wire Wire Line
+	7850 3200 7250 3200
 $EndSCHEMATC

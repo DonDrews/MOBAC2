@@ -50,5 +50,6 @@ void io_init();
 button_state* get_states();
 void toggle_quickcast();
 uint8_t get_autoclick();
+void debounce_sample();
 
 #endif

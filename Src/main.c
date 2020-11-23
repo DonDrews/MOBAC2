@@ -168,6 +168,7 @@ int main(void)
 			counter++;
 		}
 
+		//switch between sending mouse and keyboard updates at polling frequency
 		if(send_mouse)
 			send_mouse_report();
 		else

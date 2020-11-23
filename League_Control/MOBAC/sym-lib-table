@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name nucleof042k6)(type Legacy)(uri ${KIPRJMOD}/nucleof042k6.lib)(options "")(descr ""))
+  (lib (name MOBAC-rescue)(type Legacy)(uri ${KIPRJMOD}/MOBAC-rescue.lib)(options "")(descr ""))
 )
